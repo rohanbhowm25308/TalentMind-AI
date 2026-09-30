@@ -1,0 +1,57 @@
+# ===== Secrets — never commit these =====
+.env
+backend/.env
+*.env
+!*.env.example
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+backend/venv/
+backend/env/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# ===== Flask / instance data =====
+instance/
+.webassets-cache
+flask_session/
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== Editor / IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== Node (in case any tooling gets added later) =====
+node_modules/
+npm-debug.log*
+
+# ===== Build / misc output =====
+dist/
+build/
+*.zip
+.cache/
+
+# ===== Test artifacts =====
+.pytest_cache/
+.coverage
+htmlcov/

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TalentMind AI — Intelligent Workforce Intelligence</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="network-bg"></canvas>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+<div class="glow-orb glow-orb-3"></div>
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="brand-mark"><i class="fa-solid fa-diagram-project"></i></span>
+      <span class="brand-name">TalentMind <span class="accent">AI</span></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#dashboard">Platform</a>
+      <a href="#workforce">Workforce</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#agents">AI Agents</a>
+      <a href="#insights">Insights</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn-ghost" id="nav-assistant-btn"><i class="fa-solid fa-sparkles"></i> AI Assistant</button>
+      <a href="#dashboard" class="btn-primary-sm">Dashboard</a>
+      <div class="avatar">PS</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-frame">
+    <div class="hero-badge"><span class="pulse-dot"></span> Multi-Agent HR Intelligence · Live Demo</div>
+    <h1 class="hero-title">Turn Workforce Data<br>Into <span class="accent-gradient">Intelligent Decisions</span></h1>
+    <p class="hero-sub">TalentMind AI combines machine learning, generative AI, predictive analytics, and multi-agent reasoning to help HR teams understand, predict, and act — with every answer explained, not guessed.</p>
+    <div class="hero-actions">
+      <a href="#dashboard" class="btn-primary">Explore Workforce Intelligence <i class="fa-solid fa-arrow-right"></i></a>
+      <button class="btn-secondary" id="hero-ask-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask TalentMind AI</button>
+    </div>
+
+    <div class="hero-search glass">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="hero-search-input" placeholder="Ask anything about your workforce... e.g. Why is Engineering attrition increasing?" />
+      <button class="btn-find" id="hero-search-btn">Find Insight</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><span class="hnum" id="hero-stat-employees" data-target="1248">0</span><span class="hlabel">Employees</span></div>
+      <div class="hstat"><span class="hnum" id="hero-stat-health" data-target="87">0</span><span class="hlabel">Workforce Health</span></div>
+      <div class="hstat"><span class="hnum" id="hero-stat-gaps" data-target="23">0</span><span class="hlabel">Skill Gaps Tracked</span></div>
+      <div class="hstat"><span class="hnum" data-target="9">0</span><span class="hlabel">AI Agents Online</span></div>
+    </div>
+  </div>
+</section>
+
+<main id="dashboard">
+
+  <!-- ============ DATA ENTRY ============ -->
+  <section class="section" style="margin-top:0;">
+    <div class="glass upload-panel">
+      <p class="eyebrow-free">Your Workforce Data</p>
+      <h2 class="upload-title">Nothing is shown until you add data</h2>
+      <p class="upload-sub" id="dataset-status-text">Loading...</p>
+      <div class="conn-row">
+        <span class="conn-pill warn" id="conn-backend">● Checking backend…</span>
+        <span class="conn-pill warn" id="conn-ai">● Checking AI…</span>
+        <button class="btn-ghost" id="conn-retest" type="button"><i class="fa-solid fa-rotate"></i> Re-test</button>
+      </div>
+      <p class="conn-detail" id="conn-detail"></p>
+
+      <div class="data-entry-tabs">
+        <button class="data-tab active" data-tab="manual"><i class="fa-solid fa-user-plus"></i> Add an employee</button>
+        <button class="data-tab" data-tab="upload"><i class="fa-solid fa-upload"></i> Upload a file</button>
+      </div>
+
+      <!-- Manual step-by-step entry -->
+      <div class="data-tab-panel" id="tab-manual">
+        <div class="manual-form-grid">
+          <div class="mf-field"><label>Name *</label><input type="text" id="mf-name" placeholder="e.g. Alex Rivera" /></div>
+          <div class="mf-field"><label>Department *</label><input type="text" id="mf-department" placeholder="e.g. Engineering" /></div>
+          <div class="mf-field"><label>Role</label><input type="text" id="mf-role" placeholder="e.g. Backend Developer" /></div>
+          <div class="mf-field"><label>Skills</label><input type="text" id="mf-skills" placeholder="Python; SQL; AWS" /></div>
+          <div class="mf-field"><label>Engagement (0–100)</label><input type="number" id="mf-engagement" min="0" max="100" placeholder="70" /></div>
+          <div class="mf-field"><label>Overtime (0–100)</label><input type="number" id="mf-overtime" min="0" max="100" placeholder="50" /></div>
+          <div class="mf-field"><label>Growth (0–100)</label><input type="number" id="mf-growth" min="0" max="100" placeholder="60" /></div>
+          <div class="mf-field"><label>Manager Support (0–100)</label><input type="number" id="mf-manager" min="0" max="100" placeholder="65" /></div>
+          <div class="mf-field"><label>Tenure (months)</label><input type="number" id="mf-tenure" min="0" placeholder="18" /></div>
+          <div class="mf-field"><label>Open positions in dept.</label><input type="number" id="mf-openpositions" min="0" placeholder="0" /></div>
+        </div>
+        <p class="upload-hint">Only Name and Department are required — everything else defaults sensibly if left blank.</p>
+        <button class="btn-primary sm" id="add-employee-btn"><i class="fa-solid fa-plus"></i> Add Employee</button>
+        <p class="upload-error" id="manual-error"></p>
+      </div>
+
+      <!-- File upload -->
+      <div class="data-tab-panel hidden" id="tab-upload">
+        <div class="upload-actions">
+          <label class="btn-primary sm" for="dataset-file-input"><i class="fa-solid fa-upload"></i> Upload CSV / Excel
+            <input type="file" id="dataset-file-input" accept=".csv,.xlsx,.xls" hidden />
+          </label>
+          <button class="btn-secondary sm" id="download-template-btn"><i class="fa-solid fa-file-arrow-down"></i> Download sample template</button>
+        </div>
+        <p class="upload-hint">Required columns: <code>Name, Department</code>. Optional: <code>Role, Skills (semicolon-separated), Engagement, Overtime, Growth, ManagerSupport, Performance, Tenure, OpenPositions</code>. A file you upload <strong>replaces</strong> all current data.</p>
+        <p class="upload-error" id="upload-error"></p>
+      </div>
+
+      <div class="upload-actions" style="margin-top:16px; border-top:1px solid rgba(255,255,255,0.06); padding-top:16px;">
+        <button class="btn-ghost" id="load-demo-btn"><i class="fa-solid fa-flask-vial"></i> Load example demo data</button>
+        <button class="btn-ghost" id="clear-dataset-btn"><i class="fa-solid fa-trash"></i> Clear all data</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 1. COMMAND CENTER ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">AI HR Command Center</p>
+        <h2>Workforce health, at a glance</h2>
+      </div>
+      <button class="btn-secondary sm" id="refresh-kpis"><i class="fa-solid fa-rotate"></i> Refresh</button>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="glass kpi-card">
+        <div class="kpi-top"><span class="kpi-icon blue"><i class="fa-solid fa-users"></i></span></div>
+        <div class="kpi-value" id="kpi-total-employees">—</div>
+        <div class="kpi-label">Total Employees</div>
+      </div>
+      <div class="glass kpi-card">
+        <div class="kpi-top"><span class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></span></div>
+        <div class="kpi-value" id="kpi-attrition-risk">—</div>
+        <div class="kpi-label">Attrition Risk</div>
+      </div>
+      <div class="glass kpi-card">
+        <div class="kpi-top"><span class="kpi-icon cyan"><i class="fa-solid fa-briefcase"></i></span></div>
+        <div class="kpi-value" id="kpi-open-positions">—</div>
+        <div class="kpi-label">Open Positions</div>
+      </div>
+      <div class="glass kpi-card">
+        <div class="kpi-top"><span class="kpi-icon purple"><i class="fa-solid fa-layer-group"></i></span></div>
+        <div class="kpi-value" id="kpi-skill-gaps">—</div>
+        <div class="kpi-label">Critical Skill Gaps</div>
+      </div>
+      <div class="glass kpi-card">
+        <div class="kpi-top"><span class="kpi-icon green"><i class="fa-solid fa-heart-pulse"></i></span></div>
+        <div class="kpi-value" id="kpi-workforce-health">—<span class="kpi-of">/100</span></div>
+        <div class="kpi-label">Workforce Health</div>
+      </div>
+      <div class="glass kpi-card">
+        <div class="kpi-top"><span class="kpi-icon blue"><i class="fa-solid fa-chart-line"></i></span></div>
+        <div class="kpi-value" id="kpi-skill-coverage">—</div>
+        <div class="kpi-label">Skill Coverage</div>
+      </div>
+    </div>
+
+    <div class="insight-row">
+      <div class="glass ai-insight-banner" id="workforce-summary-card">
+        <div class="ai-tag"><i class="fa-solid fa-brain"></i> AI Workforce Insight</div>
+        <p id="workforce-summary-text">Engineering shows the highest attrition risk this quarter. Primary signals: declining engagement, sustained overtime, and limited skill progression relative to role requirements. Recommend a targeted retention review for 6 flagged employees.</p>
+        <button class="btn-link" id="regen-summary-btn"><i class="fa-solid fa-arrows-rotate"></i> Regenerate with AI</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORKFORCE SKILL GRAPH ============ -->
+  <section class="section" id="workforce">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">Workforce Skill Graph</p>
+        <h2>Current capability vs. future capability</h2>
+      </div>
+    </div>
+    <div class="glass graph-panel">
+      <div class="graph-canvas-wrap">
+        <canvas id="skill-graph-canvas"></canvas>
+      </div>
+      <div class="graph-side">
+        <div class="graph-select">
+          <label>Employee</label>
+          <select id="graph-employee-select"></select>
+        </div>
+        <div class="graph-path" id="graph-path-list"></div>
+        <p class="graph-note">Nodes: Employees · Skills · Departments · Roles · Projects · Training. Lines show live capability relationships from your uploaded data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECRUITMENT INTELLIGENCE ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">AI Recruitment Intelligence</p>
+        <h2>Match candidates to roles, explainably</h2>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="glass form-card">
+        <label>Job description</label>
+        <textarea id="jd-input" rows="4" placeholder="Paste the job description or required skills...">Senior Backend Engineer — Python, AWS, React, SQL, 5+ years, system design experience.</textarea>
+        <label>Candidate resume / skills</label>
+        <textarea id="resume-input" rows="4" placeholder="Paste resume text or a skills list...">Alex Chen — 8 years experience. Skills: Python, AWS, React, PostgreSQL, Docker, REST APIs, mentoring juniors.</textarea>
+        <button class="btn-primary full" id="match-btn"><i class="fa-solid fa-bolt"></i> Run AI Match</button>
+      </div>
+
+      <div class="glass match-result-card">
+        <div class="match-score-row">
+          <div class="ring-wrap">
+            <svg viewBox="0 0 120 120" class="score-ring">
+              <circle cx="60" cy="60" r="52" class="ring-track"/>
+              <circle cx="60" cy="60" r="52" class="ring-fill" id="match-ring" stroke-dasharray="327" stroke-dashoffset="327"/>
+            </svg>
+            <div class="ring-label"><span id="match-score-num">--</span><small>Match</small></div>
+          </div>
+          <div class="match-meta">
+            <div class="mm-row"><span>Skill Match</span><strong id="mm-skill">—</strong></div>
+            <div class="mm-row"><span>Experience Match</span><strong id="mm-exp">—</strong></div>
+            <div class="mm-row"><span>Required Skills</span><strong id="mm-req">—</strong></div>
+          </div>
+        </div>
+        <div class="why-panel">
+          <p class="why-title"><i class="fa-solid fa-circle-question"></i> Why this match?</p>
+          <div id="why-list" class="why-list">
+            <p class="muted-hint">Run a match to see the skill-by-skill breakdown.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILL GAP + GROWTH PLAN ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">Skill Gap Analyzer & Growth Plan</p>
+        <h2>From current skills to role readiness</h2>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="glass form-card">
+        <label>Employee skills</label>
+        <input type="text" id="gap-current-skills" value="Python, SQL, Machine Learning" />
+        <label>Target role requirements</label>
+        <input type="text" id="gap-target-skills" value="Python, SQL, Machine Learning, Power BI, Cloud (Azure)" />
+        <button class="btn-primary full" id="gap-btn"><i class="fa-solid fa-diagram-project"></i> Analyze Gap & Build Plan</button>
+      </div>
+      <div class="glass" id="gap-result-card">
+        <div class="skill-tree" id="skill-tree-list">
+          <p class="muted-hint">Run the analyzer to see matched, missing, and recommended skills.</p>
+        </div>
+        <div id="growth-plan-list" class="growth-plan"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ATTRITION PREDICTION + EXPLAINABLE AI ============ -->
+  <section class="section" id="analytics">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">Attrition Prediction · Explainable AI</p>
+        <h2>Predictions HR can actually trust</h2>
+      </div>
+      <select id="attrition-dept-select" class="dept-select"></select>
+    </div>
+
+    <div class="two-col">
+      <div class="glass explain-card">
+        <div class="risk-badge-row">
+          <span class="risk-badge high" id="attrition-risk-badge">High Risk</span>
+          <span class="risk-score" id="attrition-risk-score">73/100</span>
+        </div>
+        <p class="explain-q" id="explain-question">Why is Engineering showing higher attrition risk?</p>
+        <p class="explain-answer" id="explain-answer">Attrition risk increased due to declining engagement, higher overtime, limited skill progression, and reduced manager interaction.</p>
+
+        <div class="factor-bars" id="factor-bars">
+          <div class="factor-row"><span>Engagement</span><div class="bar"><div class="bar-fill" style="width:72%"></div></div><em>72%</em></div>
+          <div class="factor-row"><span>Overtime</span><div class="bar"><div class="bar-fill warn" style="width:88%"></div></div><em>88%</em></div>
+          <div class="factor-row"><span>Growth</span><div class="bar"><div class="bar-fill" style="width:54%"></div></div><em>54%</em></div>
+          <div class="factor-row"><span>Manager Support</span><div class="bar"><div class="bar-fill" style="width:61%"></div></div><em>61%</em></div>
+        </div>
+
+        <div class="explain-actions">
+          <button class="btn-secondary sm" id="explain-btn"><i class="fa-solid fa-magnifying-glass-chart"></i> Explain with AI</button>
+          <button class="btn-primary sm" id="action-plan-btn"><i class="fa-solid fa-list-check"></i> Generate Action Plan</button>
+        </div>
+      </div>
+
+      <div class="glass risk-radar-card">
+        <p class="card-title">Workforce Risk Radar</p>
+        <div class="radar-list" id="radar-list"></div>
+        <div class="action-center" id="action-center">
+          <p class="card-title small">AI Action Center</p>
+          <div class="action-item" id="action-item-1"><span class="pri red">P1</span> —</div>
+          <div class="action-item" id="action-item-2"><span class="pri amber">P2</span> —</div>
+          <div class="action-item" id="action-item-3"><span class="pri yellow">P3</span> —</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AI AGENT MISSION CONTROL ============ -->
+  <section class="section" id="agents">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">TalentMind AI Mission Control</p>
+        <h2>Watch the agents investigate, not just "analyzing..."</h2>
+      </div>
+    </div>
+    <div class="glass agent-panel">
+      <div class="mission-question-row">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="mission-question-input" placeholder="e.g. Why is Engineering attrition increasing?" value="Why is Engineering attrition increasing?" />
+        <button class="btn-primary sm" id="run-orchestrator-btn"><i class="fa-solid fa-play"></i> Investigate</button>
+      </div>
+
+      <div class="mission-control">
+        <div class="mc-tier">
+          <div class="agent-node orchestrator" id="agent-orchestrator"><i class="fa-solid fa-sitemap"></i><span>HR Orchestrator</span><small id="orch-status">Idle</small></div>
+        </div>
+        <div class="mc-connector"></div>
+        <div class="mc-tier mc-tier-3">
+          <div class="agent-node" data-agent="attrition"><i class="fa-solid fa-chart-line"></i><span>Attrition Agent</span><small>Idle</small></div>
+          <div class="agent-node" data-agent="skills"><i class="fa-solid fa-diagram-project"></i><span>Skills Agent</span><small>Idle</small></div>
+          <div class="agent-node" data-agent="performance"><i class="fa-solid fa-gauge-high"></i><span>Performance Agent</span><small>Idle</small></div>
+        </div>
+        <div class="mc-connector"></div>
+        <div class="mc-tier">
+          <div class="agent-node" data-agent="recommendation"><i class="fa-solid fa-lightbulb"></i><span>Recommendation Agent</span><small>Idle</small></div>
+        </div>
+        <div class="mc-connector"></div>
+        <div class="mc-tier">
+          <div class="agent-node action-plan" id="agent-action-plan"><i class="fa-solid fa-circle-check"></i><span>Action Plan</span><small>Pending</small></div>
+        </div>
+      </div>
+
+      <div class="glass investigation-result hidden" id="investigation-result">
+        <p class="ai-tag"><i class="fa-solid fa-badge-check"></i> Investigation Completed</p>
+        <div class="inv-risk-row">
+          <span>Department: <strong id="inv-dept">—</strong></span>
+          <span class="risk-badge" id="inv-risk-badge">—</span>
+        </div>
+        <div class="inv-grid">
+          <div class="inv-col">
+            <p class="inv-label"><i class="fa-solid fa-magnifying-glass-chart"></i> Evidence Found</p>
+            <ul id="inv-evidence"></ul>
+          </div>
+          <div class="inv-col">
+            <p class="inv-label"><i class="fa-solid fa-triangle-exclamation"></i> Contributing Factors</p>
+            <ul id="inv-factors"></ul>
+          </div>
+          <div class="inv-col">
+            <p class="inv-label"><i class="fa-solid fa-list-check"></i> Recommended Actions</p>
+            <ul id="inv-actions"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EMPLOYEE SKILL DNA ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">Employee Skill DNA</p>
+        <h2>A personalized skill profile for every employee</h2>
+      </div>
+      <div class="graph-select" style="min-width:260px;">
+        <select id="dna-employee-select"></select>
+      </div>
+    </div>
+    <div class="glass dna-panel" id="dna-panel">
+      <p class="empty-note">Add or select an employee to generate their Skill DNA.</p>
+    </div>
+  </section>
+
+  <!-- ============ ASK YOUR WORKFORCE DATA ============ -->
+  <section class="section" id="insights">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">Ask Your Workforce Data</p>
+        <h2>Answer → evidence → recommended action</h2>
+      </div>
+    </div>
+    <div class="glass ask-panel">
+      <div class="ask-suggestions">
+        <button class="chip">Which department has the highest attrition risk?</button>
+        <button class="chip">Which skills are missing across teams?</button>
+        <button class="chip">What actions should HR take this quarter?</button>
+      </div>
+      <div class="ask-input-row">
+        <i class="fa-solid fa-message"></i>
+        <input type="text" id="ask-input" placeholder="Ask anything about your workforce..." />
+        <button class="mic-btn" id="ask-mic-btn" type="button" title="Speak your question"><i class="fa-solid fa-microphone"></i></button>
+        <button class="btn-find" id="ask-btn">Ask TalentMind</button>
+      </div>
+      <div id="ask-chat" class="ask-chat"></div>
+    </div>
+  </section>
+
+  <!-- ============ HR POLICY ASSISTANT ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">HR Policy Reasoning Agent</p>
+        <h2>Source-backed answers from your policies</h2>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="glass form-card">
+        <label>Paste policy document text</label>
+        <textarea id="policy-doc-input" rows="6">Remote Work Policy: Employees may work from home up to 8 days per month, subject to manager approval. Leave Policy: Employees accrue 1.5 days of paid leave per month, up to 18 days annually. Overtime beyond 45 hours/week requires HRBP sign-off and is compensated at 1.5x.</textarea>
+        <label>Question</label>
+        <input type="text" id="policy-question-input" value="How many work-from-home days are allowed?" />
+        <button class="btn-primary full" id="policy-ask-btn"><i class="fa-solid fa-file-circle-question"></i> Ask Policy Agent</button>
+      </div>
+      <div class="glass" id="policy-result-card">
+        <p class="muted-hint" id="policy-answer-placeholder">Ask a question to get a source-backed answer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORKFORCE DIGITAL TWIN ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">Workforce Digital Twin</p>
+        <h2>Simulate before you decide</h2>
+      </div>
+    </div>
+    <div class="glass whatif-panel">
+      <div class="whatif-controls">
+        <div class="slider-row">
+          <label>Engineering hiring <span id="hire-slider-val">+15%</span></label>
+          <input type="range" id="hire-slider" min="-20" max="40" value="15" />
+        </div>
+        <div class="slider-row">
+          <label>Training investment <span id="train-slider-val">+20%</span></label>
+          <input type="range" id="train-slider" min="-20" max="60" value="20" />
+        </div>
+        <div class="slider-row">
+          <label>Remote employees <span id="remote-slider-val">+10%</span></label>
+          <input type="range" id="remote-slider" min="-20" max="40" value="10" />
+        </div>
+        <div class="slider-row">
+          <label>Attrition target reduction <span id="attrition-slider-val">-5%</span></label>
+          <input type="range" id="attrition-slider" min="0" max="15" value="5" />
+        </div>
+        <button class="btn-primary sm" id="run-whatif-btn"><i class="fa-solid fa-flask"></i> Run Simulation</button>
+        <p class="scenario-note">Scenario estimates only — not guaranteed outcomes.</p>
+      </div>
+      <div class="twin-results">
+        <table class="twin-table">
+          <thead><tr><th></th><th>Before</th><th>After</th></tr></thead>
+          <tbody>
+            <tr><td>Attrition Risk</td><td id="twin-attrition-before">—</td><td id="twin-attrition-after">—</td></tr>
+            <tr><td>Skill Coverage</td><td id="twin-skill-before">—</td><td id="twin-skill-after">—</td></tr>
+            <tr><td>Hiring Demand</td><td id="twin-hiring-before">—</td><td id="twin-hiring-after">—</td></tr>
+            <tr><td>Workforce Cost</td><td id="twin-cost-before">—</td><td id="twin-cost-after">—</td></tr>
+            <tr><td>Overall Risk</td><td id="twin-risk-before">—</td><td id="twin-risk-after">—</td></tr>
+          </tbody>
+        </table>
+        <div class="glass twin-recommendation" id="twin-recommendation-box">
+          <p class="ai-tag"><i class="fa-solid fa-brain"></i> AI Recommendation</p>
+          <p id="twin-recommendation-text" class="muted-hint">Run a simulation to see the AI's read on this scenario.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ INTELLIGENCE CARDS GRID ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow-free">HR Intelligence Modules</p>
+        <h2>Every stage of the employee lifecycle</h2>
+      </div>
+    </div>
+    <div class="module-grid">
+      <div class="glass module-card"><i class="fa-solid fa-user-plus"></i><h3>Adaptive Onboarding Agent</h3><p>Generates personalized 30/60/90-day plans by role, department, and profile.</p></div>
+      <div class="glass module-card"><i class="fa-solid fa-comments"></i><h3>Intelligent Interview Agent</h3><p>Role-specific questions with structured competency scoring.</p></div>
+      <div class="glass module-card"><i class="fa-solid fa-gauge"></i><h3>AI Performance Insights</h3><p>Reads goals, feedback, and history to surface strengths and gaps.</p></div>
+      <div class="glass module-card"><i class="fa-solid fa-route"></i><h3>Employee Lifecycle Intelligence</h3><p>Connects recruit → onboard → perform → grow → retain in one view.</p></div>
+      <div class="glass module-card"><i class="fa-solid fa-chart-area"></i><h3>Workforce Trend Intelligence</h3><p>AI-interpreted trends, not just charts — what changed and why.</p></div>
+      <div class="glass module-card"><i class="fa-solid fa-file-export"></i><h3>Executive Report Generator</h3><p>One click: a full workforce report with risks, gaps, and actions.</p>
+        <button class="btn-link" id="gen-report-btn">Generate Report <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="glass cta-banner">
+      <div>
+        <h2>Built for the Microsoft Hackathon — Track 1: HR</h2>
+        <p>An AI-driven intelligent workforce management platform that understands employee data, automates HR workflows, identifies risk, and recommends actions across the full employee lifecycle.</p>
+      </div>
+      <button class="btn-primary" id="cta-ask-btn"><i class="fa-solid fa-sparkles"></i> Ask TalentMind AI</button>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>©TalentMind AI · Intelligent Workforce Intelligence</span>
+    <span class="footer-status"><span class="pulse-dot"></span> All 9 agents online</span>
+  </div>
+  <div class="footer-dev">
+    <span class="footer-dev-credit">Developed by <strong>Rohan Bhowmik</strong></span>
+    <div class="footer-socials">
+      <!-- TODO: replace with your real LinkedIn and Instagram URLs -->
+      <a href="https://www.linkedin.com/in/rohan-bhowmik-b014473a1/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://github.com/rohanbhowm25308" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.instagram.com/rohan_._.bhowmik.84/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ AI ASSISTANT DRAWER ============ -->
+<div class="assistant-drawer" id="assistant-drawer">
+  <div class="assistant-head">
+    <span><i class="fa-solid fa-sparkles"></i> TalentMind Assistant</span>
+    <button id="assistant-close"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="assistant-body" id="assistant-body">
+    <div class="asst-msg bot">Hi, I'm the TalentMind orchestrator. Ask me about attrition, skills, policies, or hiring — I'll route your question to the right agent.</div>
+  </div>
+  <div class="assistant-input-row">
+    <input type="text" id="assistant-input" placeholder="Type or speak a question..." />
+    <button id="assistant-mic" class="mic-btn" type="button" title="Speak your question"><i class="fa-solid fa-microphone"></i></button>
+    <button id="assistant-send"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script src="backgrounds.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
